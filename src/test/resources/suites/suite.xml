@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Test Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="core.TestListener"/>
+    </listeners>
+
+    <!-- E2E UI Test -->
+    <test name="Auth Tests">
+        <classes>
+            <class name="tests.ui.auth.LoginTest"/>
+        </classes>
+    </test>
+
+</suite>

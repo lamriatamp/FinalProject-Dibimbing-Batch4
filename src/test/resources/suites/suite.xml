@@ -12,4 +12,10 @@
         </classes>
     </test>
 
+    <test name="Auth Api Test">
+        <classes>
+            <class name="tests.api.auth.LoginTest"/>
+        </classes>
+    </test>
+
 </suite>

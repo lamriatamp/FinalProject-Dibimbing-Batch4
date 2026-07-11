@@ -9,6 +9,8 @@ public class DashboardPage extends BasePage{
     @FindBy(xpath = "//p[normalize-space()='Dashboard']")
     private WebElement dashboardPageTitle;
 
+    @FindBy(id = "layout-desktop-menu-item-link-fasttrackclass")
+    private WebElement menuFTCButton;
 
 
     public DashboardPage (WebDriver driver) {
@@ -17,5 +19,10 @@ public class DashboardPage extends BasePage{
     public boolean isDashboardTitleDisplayed() {
         waitForElementToBeVisible(dashboardPageTitle);
         return dashboardPageTitle.isDisplayed();
+    }
+
+    public void clickFTCPageButton() {
+        waitForElementToBeVisible(menuFTCButton);
+        menuFTCButton.click();
     }
 }

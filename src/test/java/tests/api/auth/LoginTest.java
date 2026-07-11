@@ -21,8 +21,8 @@ public class LoginTest extends BaseApiTest {
                     "    usernameOrEmail: $usernameOrEmail    \n" +
                     "    password: $password    \n" +
                     "    companyId: $companyId) {\n" +
-                    "        user { id name username email role } \n" +
-                    "        errors { message field }\n" +
+                    "    user { id name username email role } \n" +
+                    "    errors { message field }\n" +
                     "    }\n" +
                     "}";
 

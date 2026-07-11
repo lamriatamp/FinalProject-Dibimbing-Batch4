@@ -3,8 +3,9 @@ package org.example;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
     @FindBy(id = "input-username-or-email")
     private WebElement emailInput;
@@ -15,8 +16,13 @@ public class LoginPage extends BasePage{
     @FindBy(id = "button-sign-in")
     private WebElement signInButton;
 
+    @FindBy(xpath = "//p[normalize-space()='wrong username or password']")
+    private WebElement failedMessageWrongPassword;
 
-    public LoginPage (WebDriver driver) {
+    @FindBy(id = "field-password-right-element")
+    private WebElement eyeIcon;
+
+    public LoginPage(WebDriver driver) {
         super(driver);
     }
 
@@ -33,5 +39,20 @@ public class LoginPage extends BasePage{
     public void clickSigninButton() {
         waitForElementToBeVisible(signInButton);
         signInButton.click();
+    }
+
+    public boolean isErrorMessageDisplayed() {
+        waitForElementToBeVisible(failedMessageWrongPassword);
+        return failedMessageWrongPassword.isDisplayed();
+    }
+
+    public void clickIconHidePassword() {
+        waitForElementToBeVisible(eyeIcon);
+        eyeIcon.click();
+    }
+
+    public String currentPasswordType() {
+        waitForElementToBeVisible(passInput);
+        return passInput.getAttribute("type");
     }
 }

@@ -19,6 +19,9 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//p[normalize-space()='wrong username or password']")
     private WebElement failedMessageWrongPassword;
 
+    @FindBy(id = "field-password-right-element")
+    private WebElement eyeIcon;
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -41,5 +44,15 @@ public class LoginPage extends BasePage {
     public boolean isErrorMessageDisplayed() {
         waitForElementToBeVisible(failedMessageWrongPassword);
         return failedMessageWrongPassword.isDisplayed();
+    }
+
+    public void clickIconHidePassword() {
+        waitForElementToBeVisible(eyeIcon);
+        eyeIcon.click();
+    }
+
+    public String currentPasswordType() {
+        waitForElementToBeVisible(passInput);
+        return passInput.getAttribute("type");
     }
 }

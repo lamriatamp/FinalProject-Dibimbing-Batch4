@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,24 +16,28 @@ public class DriverManager {
 
     public static void initDriver(String browser) {
         WebDriver webDriver = null;
+        
+        // 1. Pindahkan deteksi CI ke luar agar bisa dibaca oleh semua browser
+        String githubActions = System.getenv("GITHUB_ACTIONS");
+        boolean isCI = githubActions != null && githubActions.equals("true");
+
+        System.out.println("=== Driver Initialization ===");
+        System.out.println("Running in CI: " + isCI);
+
         switch (browser.toLowerCase()) {
-            case "chrome" :
-                String githubActions = System.getenv("GITHUB_ACTIONS");
-                boolean isCI = githubActions != null && githubActions.equals("true");
-
-                System.out.println("=== Driver Initialization ===");
-                System.out.println("Running in CI: " + isCI);
-
+            case "chrome":
                 if (!isCI) {
                     System.out.println("Setting up ChromeDriver via WebDriverManager");
                     WebDriverManager.chromedriver().setup();
                 } else {
                     System.out.println("Using pre-installed ChromeDriver from CI");
                     String chromeDriverPath = System.getenv("CHROMEDRIVER_PATH");
-                    if (chromeDriverPath != null && !chromeDriverPath.isEmpty()) {
-                        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-                        System.out.println("ChromeDriver path set to: " + chromeDriverPath);
+                    // Fallback jika CHROMEDRIVER_PATH tidak diset di ci.yml
+                    if (chromeDriverPath == null || chromeDriverPath.isEmpty()) {
+                        chromeDriverPath = "/usr/bin/chromedriver"; 
                     }
+                    System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+                    System.out.println("ChromeDriver path set to: " + chromeDriverPath);
                 }
 
                 ChromeOptions options = new ChromeOptions();
@@ -50,12 +55,14 @@ public class DriverManager {
                 if (isCI) {
                     System.out.println("Configuring Chrome for CI environment");
                     String chromeBin = System.getenv("CHROME_BIN");
-                    if (chromeBin != null && !chromeBin.isEmpty()) {
-                        options.setBinary(chromeBin);
-                        System.out.println("Chrome binary set to: " + chromeBin);
-                    } else {
-                        System.out.println("CHROME_BIN not set, using default");
+                    
+                    // 3. Fallback path spesifik untuk Chromium di Ubuntu GitHub Actions
+                    if (chromeBin == null || chromeBin.isEmpty()) {
+                        chromeBin = "/usr/bin/chromium-browser";
                     }
+                    options.setBinary(chromeBin);
+                    System.out.println("Chrome binary set to: " + chromeBin);
+                    
                     options.addArguments("--headless=new");
                     options.addArguments("--disable-gpu");
                     options.addArguments("--window-size=1920,1080");
@@ -80,10 +87,23 @@ public class DriverManager {
                     throw e;
                 }
                 break;
-            case "firefox" :
+                
+            case "firefox":
                 WebDriverManager.firefoxdriver().setup();
-                webDriver = new FirefoxDriver();
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                
+                // 2. Tambahkan mode headless untuk Firefox jika berjalan di CI
+                if (isCI) {
+                    System.out.println("Configuring Firefox for CI environment (Headless)");
+                    firefoxOptions.addArguments("--headless");
+                    firefoxOptions.addArguments("--window-size=1920,1080");
+                }
+                
+                webDriver = new FirefoxDriver(firefoxOptions);
                 break;
+                
+            default:
+                throw new IllegalArgumentException("Browser tidak didukung: " + browser);
         }
         driver.set(webDriver);
     }
@@ -98,5 +118,4 @@ public class DriverManager {
             driver.remove();
         }
     }
-
 }

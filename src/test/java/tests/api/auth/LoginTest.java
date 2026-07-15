@@ -36,7 +36,7 @@ public class LoginTest extends BaseApiTest {
         variables.put("companyId", config.getProperty("companyId"));
 
         // Request
-        Response response = utilRequest("login", mutation, variables, null, null, null);
+        Response response = utilRequest(mutation, variables, null, null, null);
         JsonPath jsonPath = response.jsonPath();
 
         // Validate base structure

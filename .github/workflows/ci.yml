@@ -25,8 +25,8 @@ jobs:
           cat <<EOF > src/test/resources/config/stage.properties
           baseApiUrl=${{ secrets.BASEAPIURL }}
           companyId=${{ secrets.COMPANYID }}
-          validEmailLogin=${{ secrets.VALIDEMAILAUTH }}
-          validPasswordLogin=${{ secrets.VALIDPASSWORDAUTH }}
+          validEmailLogin=${{ secrets.VALIDEMAILLOGIN }}
+          validPasswordLogin=${{ secrets.VALIDPASSWORDLOGIN }}
           EOF
 
       - name: Run Auth Integration Tests

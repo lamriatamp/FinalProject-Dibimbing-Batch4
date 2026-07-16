@@ -36,6 +36,7 @@
     <test name="Auth Api Test">
         <classes>
             <class name="tests.api.auth.LoginTest"/>
+            <class name="tests.api.auth.LogoutTest"/>
         </classes>
     </test>
 

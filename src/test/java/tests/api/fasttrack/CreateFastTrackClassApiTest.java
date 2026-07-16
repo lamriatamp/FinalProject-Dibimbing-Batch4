@@ -40,6 +40,7 @@ public class CreateFastTrackClassApiTest extends BaseApiTest {
     public void testCreateFastTrackClassPositive(ITestContext context) {
         logger.info("Mengeksekusi Mutation Create Program Fast Track Class (Positive)");
 
+        //inisialisasi payload
         Map<String, Object> inputData = new HashMap<>();
         inputData.put("title", "Automated QA Engineering - Batch 2");
         inputData.put("description", "Materi API Automation terstruktur");
@@ -49,7 +50,7 @@ public class CreateFastTrackClassApiTest extends BaseApiTest {
         Map<String, Object> variables = new HashMap<>();
         variables.put("input", inputData);
 
-        // Memanggil variabel statis CREATE_PROGRAM_MUTATION
+        // Mengirimkan request
         Response response = utilRequest(CREATE_PROGRAM_MUTATION, variables, null, null, sessionId);
         JsonPath jsonPath = response.jsonPath();
 

@@ -1,21 +1,34 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-
 <suite name="Test Suite" parallel="tests" thread-count="2">
+
     <listeners>
         <listener class-name="core.TestListener"/>
     </listeners>
 
-    <!-- E2E UI Test -->
-    <test name="Auth Tests">
+    <test name="Auth UI Tests">
         <classes>
             <class name="tests.ui.auth.LoginTest"/>
         </classes>
     </test>
 
-    <test name="Auth Api Test">
+    <test name="FTC UI Tests">
+        <classes>
+            <class name="tests.ui.fasttrackclass.CreateFastTrackClassTest"/>
+        </classes>
+    </test>
+
+    <test name="Auth API Tests">
         <classes>
             <class name="tests.api.auth.LoginTest"/>
             <class name="tests.api.auth.LogoutTest"/>
+        </classes>
+    </test>
+
+    <test name="FTC API Tests">
+        <classes>
+            <class name="tests.api.fasttrack.CreateFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.GetFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.UpdateFastTrackClassApiTest"/>
         </classes>
     </test>
 

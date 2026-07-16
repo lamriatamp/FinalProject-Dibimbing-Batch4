@@ -1,13 +1,9 @@
 package core;
 
 import io.restassured.specification.RequestSpecification;
-
 import io.restassured.response.Response;
-
 import java.util.*;
-
 import static io.restassured.RestAssured.given;
-
 public class TestUtils extends BaseApiTest{
 
     public static Response utilRequest(String graphqlQuery, Object variables, String username, String password, String sessionId) {
@@ -17,11 +13,11 @@ public class TestUtils extends BaseApiTest{
         if (variables != null) requestBody.put("variables", variables);
 
         RequestSpecification request = given().contentType(contentType);
-        // Basic Auth
+// Basic Auth
         if (username != null && !username.isBlank()) {
             request.auth().preemptive().basic(username, password);
         }
-        // Session Cookie
+// Session Cookie
         if (sessionId != null && !sessionId.isBlank()) {
             request.cookie("sid_b2b", sessionId);
         }
@@ -41,10 +37,10 @@ public class TestUtils extends BaseApiTest{
 
     public static String getSid() {
         final String mutation = "mutation Login($companyId: String!, $usernameOrEmail: String!, $password: String!) {\n" +
-                "   login(companyId: $companyId, usernameOrEmail: $usernameOrEmail, password: $password) {\n" +
-                "     user { id }\n" +
-                "     errors { field message }\n" +
-                "   }\n" +
+                " login(companyId: $companyId, usernameOrEmail: $usernameOrEmail, password: $password) {\n" +
+                " user { id }\n" +
+                " errors { field message }\n" +
+                " }\n" +
                 " }";
 
         Map<String, Object> variables = new HashMap<>();

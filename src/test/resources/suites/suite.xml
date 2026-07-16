@@ -12,9 +12,24 @@
         </classes>
     </test>
 
+<<<<<<< Updated upstream
     <test name="FTC Tests">
         <classes>
             <class name="tests.ui.fasttrackclass.CreateFastTrackClassTest"/>
+=======
+    <test name="Auth Api Test">
+    <classes>
+        <class name="tests.api.auth.LoginTest"/>
+        <class name="tests.api.auth.LogoutTest"/>
+    </classes>
+</test>
+
+    <test name="FTC Api Test">
+        <classes>
+            <class name="tests.api.fasttrack.CreateFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.GetFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.UpdateFastTrackClassApiTest"/>
+>>>>>>> Stashed changes
         </classes>
     </test>
 

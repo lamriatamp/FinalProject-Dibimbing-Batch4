@@ -23,7 +23,6 @@ jobs:
         run: |
           mkdir -p src/test/resources/config
           cat <<EOF > src/test/resources/config/stage.properties
-          baseUrl=${{ secrets.BASEURL }}
           baseApiUrl=${{ secrets.BASEAPIURL }}
           companyId=${{ secrets.COMPANYID }}
           validEmailLogin=${{ secrets.VALIDEMAILLOGIN }}
@@ -31,4 +30,4 @@ jobs:
           EOF
 
       - name: Run Auth Integration Tests
-        run: ./gradlew test -Psuite=ci.xml -Penv=stage
+        run: ./gradlew test -Psuite=ci-api.xml -Penv=stage

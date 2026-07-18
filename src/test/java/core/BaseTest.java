@@ -2,6 +2,9 @@ package core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.DashboardPage;
+import org.example.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -32,6 +35,22 @@ public class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         DriverManager.quitDriver();
+    }
+
+    protected void preConditionLogin (){
+        logger.info("Pre-Condition: User sudah memiliki akun");
+
+        // Test Steps
+        LoginPage loginPage = new LoginPage(DriverManager.getDriver());
+        String email = config.getProperty("validEmailLogin");
+        loginPage.fillEmailField(email);
+        String pass = config.getProperty("validPasswordLogin");
+        loginPage.fillPassField(pass);
+        loginPage.clickSigninButton();
+        DashboardPage dashboardPage = new DashboardPage(DriverManager.getDriver());
+        Assert.assertTrue(dashboardPage.isDashboardTitleDisplayed(), "Judul Dashbord Tidak Sesuai");
+        String url = DriverManager.getDriver().getCurrentUrl();
+        Assert.assertTrue(url.contains("/dashboard"), "Halaman seharusnya berada di dashboard");
     }
 
 

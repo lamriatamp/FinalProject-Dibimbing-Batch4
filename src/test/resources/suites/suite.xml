@@ -5,10 +5,16 @@
         <listener class-name="core.TestListener"/>
     </listeners>
 
-    <!-- E2E UI Test -->
+    <!-- UI Test -->
     <test name="Auth Tests">
         <classes>
             <class name="tests.ui.auth.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="FTC Tests">
+        <classes>
+            <class name="tests.ui.fasttrackclass.CreateFastTrackClassTest"/>
         </classes>
     </test>
 
@@ -18,5 +24,15 @@
             <class name="tests.api.auth.LogoutTest"/>
         </classes>
     </test>
+
+    <test name="FTC Api Test">
+        <classes>
+            <class name="tests.api.fasttrack.CreateFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.GetFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.UpdateFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.CreateChapterApiTest"/>
+        </classes>
+    </test>
+
 
 </suite>

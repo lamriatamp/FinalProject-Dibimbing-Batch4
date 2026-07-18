@@ -1,0 +1,57 @@
+name: CI E2E Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  continious-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [ chrome, firefox ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Create stage.properties
+        run: |
+          mkdir -p src/test/resources/config
+          cat <<EOF > src/test/resources/config/stage.properties
+          baseUrl=${{ secrets.BASEURL }}
+          companyId=${{ secrets.COMPANYID }}
+          validEmailLogin=${{ secrets.VALIDEMAILLOGIN }}
+          validPasswordLogin=${{ secrets.VALIDPASSWORDLOGIN }}
+          EOF
+
+      - name: Set up Chrome
+        if: matrix.browser == 'chrome'
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Set up ChromeDriver
+        if: matrix.browser == 'chrome'
+        uses: nanasess/setup-chromedriver@v2
+
+      - name: Set up Firefox
+        if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-firefox@latest
+
+      - name: Set up GeckoDriver
+        if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-geckodriver@latest
+
+      - name: Run Auth E2E Tests
+        run: ./gradlew test -Psuite=ci-ui.xml -Penv=stage
+        env:
+          CHROMEDRIVER_PATH: ${{ matrix.browser == 'chrome' && '/usr/local/bin/chromedriver' || '' }}
+          CHROME_BIN: ${{ matrix.browser == 'chrome' && '/usr/bin/google-chrome' || '' }}
+          FIREFOX_BIN: ${{ matrix.browser == 'firefox' && steps.setup-firefox.outputs.firefox-path || '' }}

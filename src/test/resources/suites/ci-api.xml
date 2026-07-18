@@ -5,13 +5,6 @@
         <listener class-name="core.TestListener"/>
     </listeners>
 
-    <!-- E2E UI Test -->
-    <test name="Auth Tests">
-        <classes>
-            <class name="tests.ui.auth.LoginTest"/>
-        </classes>
-    </test>
-
     <test name="Auth Api Test">
         <classes>
             <class name="tests.api.auth.LoginTest"/>

@@ -30,6 +30,7 @@
             <class name="tests.api.fasttrack.CreateFastTrackClassApiTest"/>
             <class name="tests.api.fasttrack.GetFastTrackClassApiTest"/>
             <class name="tests.api.fasttrack.UpdateFastTrackClassApiTest"/>
+            <class name="tests.api.fasttrack.CreateChapterApiTest"/>
         </classes>
     </test>
 

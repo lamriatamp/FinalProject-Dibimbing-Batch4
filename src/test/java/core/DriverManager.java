@@ -17,7 +17,8 @@ public class DriverManager {
     public static void initDriver(String browser) {
         WebDriver webDriver = null;
         switch (browser.toLowerCase()) {
-            case "chrome" -> {
+            case "chrome":
+            {
                 String githubActions = System.getenv("GITHUB_ACTIONS");
                 boolean isCI = githubActions != null && githubActions.equals("true");
 
@@ -80,8 +81,11 @@ public class DriverManager {
                     e.printStackTrace();
                     throw e;
                 }
+                break;
             }
-            case "firefox" -> {
+
+            case "firefox":
+            {
                 String githubActions = System.getenv("GITHUB_ACTIONS");
                 boolean isCI = githubActions != null && githubActions.equals("true");
 
@@ -119,8 +123,10 @@ public class DriverManager {
                     options.addArguments("--height=1080");
                     System.out.println("Headless mode enabled with CI-specific options");
                 } else {
-                    options.addPreference("general.useragent.override",
-                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Gecko/20100101 Firefox/120.0");
+                    options.addPreference(
+                            "general.useragent.override",
+                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Gecko/20100101 Firefox/120.0"
+                    );
                 }
 
                 try {
@@ -132,6 +138,7 @@ public class DriverManager {
                     e.printStackTrace();
                     throw e;
                 }
+                break;
             }
         }
         driver.set(webDriver);
